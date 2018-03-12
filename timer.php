@@ -25,6 +25,21 @@ function tick()
   sleep(1);
 }
 
+function displayDoneMessage()
+{
+  $os = php_uname('s');
+  $breakMessage = 'Rrrrring! Take a break :-)';
+
+  if ($os == 'Darwin') {
+    $command
+      = 'osascript -e \'display notification "' . $breakMessage . '" with title "Break"\'';
+  } else {
+    $command = 'notify-send "' . $breakMessage . '"';
+  }
+
+  shell_exec($command);
+}
+
 $seconds = getMinutesFromArguments($argv) * 60;
 
 while ($seconds > 0) {
@@ -33,5 +48,5 @@ while ($seconds > 0) {
   $seconds -= 1;
 }
 
-shell_exec('notify-send "Rrrrring! Take a break :-)"');
+displayDoneMessage();
 echo "Rrrrring!" . PHP_EOL;
